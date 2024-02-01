@@ -20,4 +20,8 @@
     <Folder Include="Services\IServices\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Jewelry.Models\Jewelry.Models.csproj" />
+  </ItemGroup>
+
 </Project>
