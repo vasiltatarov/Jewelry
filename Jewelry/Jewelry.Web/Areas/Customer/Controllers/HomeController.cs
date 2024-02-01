@@ -1,6 +1,6 @@
 namespace Jewelry.Web.Areas.Customer.Controllers;
 
-[Area("Customer")]
+[Area(WebConstants.CustomerAreaName)]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

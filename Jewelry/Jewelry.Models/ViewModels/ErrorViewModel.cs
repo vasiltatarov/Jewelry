@@ -1,4 +1,4 @@
-namespace Jewelry.Web.Models;
+namespace Jewelry.Models.ViewModels;
 
 public class ErrorViewModel
 {
