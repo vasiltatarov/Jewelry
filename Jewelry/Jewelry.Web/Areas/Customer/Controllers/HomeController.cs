@@ -3,16 +3,18 @@ namespace Jewelry.Web.Areas.Customer.Controllers;
 [Area(WebConstants.CustomerAreaName)]
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IProductService productService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IProductService productService)
     {
-        _logger = logger;
+        this.productService = productService;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var products = this.productService.GetAll();
+
+        return View(products);
     }
 
     public IActionResult Privacy()
