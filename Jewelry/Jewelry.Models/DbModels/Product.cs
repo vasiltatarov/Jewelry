@@ -21,6 +21,8 @@ public class Product
     [Range(1, 1000)]
     public int Quantity { get; set; }
 
+    public bool OutOfStock { get; set; }
+
     public int CategoryId { get; set; }
 
     [ValidateNever]
