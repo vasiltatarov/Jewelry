@@ -16,8 +16,8 @@ public class ProductService : IProductService
 
     public List<Product> GetAll()
     {
-        var products = this.productRepository.GetAll(includeProperties: "Category");
+        var products = this.productRepository.GetAll(includeProperties: "Category").ToList();
 
-        return products.ToList();
+        return products;
     }
 }
