@@ -1,7 +1,7 @@
 ﻿namespace Jewelry.Web.Areas.Admin.Controllers;
 
 [Area(WebConstants.AdminAreaName)]
-//[Authorize(Roles = GlobalConstants.RoleAdmin)]
+[Authorize(Roles = GlobalConstants.RoleAdmin)]
 public class CategoryController : Controller
 {
     private readonly ICategoryService categoryService;
