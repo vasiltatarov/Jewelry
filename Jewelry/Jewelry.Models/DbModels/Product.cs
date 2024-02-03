@@ -15,7 +15,6 @@ public class Product
     [Required]
     public string Description { get; set; }
 
-    [Range(1, 1000)]
     public double Price { get; set; }
 
     [Range(1, 1000)]

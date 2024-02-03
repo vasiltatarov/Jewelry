@@ -32,13 +32,13 @@ public class ProductService : IProductService
         this.productRepository.Save();
     }
 
-    public List<Product> GetAll()
+    public List<Product> GetAll(string includeProperties)
     {
-        return this.productRepository.GetAll(includeProperties: "Category").ToList();
+        return this.productRepository.GetAll(includeProperties: includeProperties).ToList();
     }
 
     public Product GetById(int id)
     {
-        return this.productRepository.Get(x => x.Id == id);
+        return this.productRepository.Get(x => x.Id == id, "ProductImages");
     }
 }

@@ -12,7 +12,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var products = this.productService.GetAll();
+        var products = this.productService.GetAll("Category,ProductImages");
 
         return View(products);
     }

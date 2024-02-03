@@ -4,7 +4,7 @@ using Jewelry.Models.DbModels;
 
 public interface IProductService
 {
-    List<Product> GetAll();
+    List<Product> GetAll(string includeProperties);
 
     Product GetById(int id);
 

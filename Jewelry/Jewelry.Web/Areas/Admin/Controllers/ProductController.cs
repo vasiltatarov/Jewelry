@@ -85,7 +85,7 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult GetAll()
     {
-        var products = this.productService.GetAll();
+        var products = this.productService.GetAll("Category");
 
         return Json(new { data = products });
     }
