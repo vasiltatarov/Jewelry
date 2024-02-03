@@ -20,10 +20,27 @@ public class CategoryService : ICategoryService
         this.categoryRepository.Save();
     }
 
+    public void Update(Category category)
+    {
+        this.categoryRepository.Update(category);
+        this.categoryRepository.Save();
+    }
+
+    public void Delete(int id)
+    {
+        var category = this.GetById(id);
+
+        this.categoryRepository.Remove(category);
+        this.categoryRepository.Save();
+    }
+
     public List<Category> GetAll()
     {
-        var categories = this.categoryRepository.GetAll().OrderBy(x => x.DisplayOrder).ToList();
+        return this.categoryRepository.GetAll().OrderBy(x => x.DisplayOrder).ToList();
+    }
 
-        return categories;
+    public Category GetById(int id)
+    {
+        return this.categoryRepository.Get(x => x.Id == id);
     }
 }

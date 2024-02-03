@@ -14,6 +14,6 @@ public class Category
     public string Name { get; set; }
 
     [DisplayName("Display Order")]
-    [Range(1, 100, ErrorMessage = "Display Order must be between 1-100")]
+    [Range(1, 1000, ErrorMessage = "Display Order must be between 1-1000")]
     public int DisplayOrder { get; set; }
 }

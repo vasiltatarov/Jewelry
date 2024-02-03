@@ -1,7 +1,5 @@
 ﻿namespace Jewelry.Web.Areas.Admin.Controllers;
 
-using Jewelry.Models.DbModels;
-
 [Area(WebConstants.AdminAreaName)]
 [Authorize(Roles = GlobalConstants.RoleAdmin)]
 public class CategoryController : Controller
@@ -15,9 +13,7 @@ public class CategoryController : Controller
 
     public IActionResult Index()
     {
-        var categories = this.categoryService.GetAll();
-
-        return View(categories);
+        return View(this.categoryService.GetAll());
     }
 
     public IActionResult Create() => View();
@@ -30,10 +26,59 @@ public class CategoryController : Controller
             return View(category);
         }
 
-        this.categoryService.Add(category); 
+        this.categoryService.Add(category);
 
         TempData["success"] = string.Format(WebConstants.SuccessCreateNotification, nameof(Category));
 
         return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Update(int id)
+    {
+        var category = this.categoryService.GetById(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        return View(category);
+    }
+
+    [HttpPost]
+    public IActionResult Update(Category category)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(category);
+        }
+
+        this.categoryService.Update(category);
+
+        TempData["success"] = string.Format(WebConstants.SuccessEditNotification, nameof(Category));
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Delete(int id)
+    {
+        var category = this.categoryService.GetById(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        return View(category);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeletePOST(int id)
+    {
+        this.categoryService.Delete(id);
+
+        TempData["success"] = string.Format(WebConstants.SuccessDeleteNotification, nameof(Category));
+
+        return RedirectToAction("Index");
     }
 }
