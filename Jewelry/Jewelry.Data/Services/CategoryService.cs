@@ -3,6 +3,7 @@
 using Jewelry.Data.Repository.IRepository;
 using Jewelry.Data.Services.IServices;
 using Jewelry.Models.DbModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 public class CategoryService : ICategoryService
@@ -42,5 +43,17 @@ public class CategoryService : ICategoryService
     public Category GetById(int id)
     {
         return this.categoryRepository.Get(x => x.Id == id);
+    }
+
+    public List<SelectListItem> GetCategoryList()
+    {
+        return this.categoryRepository
+            .GetAll()
+            .Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            })
+            .ToList();
     }
 }

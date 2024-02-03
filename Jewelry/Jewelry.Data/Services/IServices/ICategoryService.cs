@@ -1,6 +1,7 @@
 ﻿namespace Jewelry.Data.Services.IServices;
 
 using Jewelry.Models.DbModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public interface ICategoryService
 {
@@ -13,4 +14,6 @@ public interface ICategoryService
     List<Category> GetAll();
 
     Category GetById(int id);
+
+    List<SelectListItem> GetCategoryList();
 }

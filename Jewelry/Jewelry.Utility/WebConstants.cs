@@ -8,4 +8,6 @@ public static class WebConstants
     public const string SuccessCreateNotification = "{0} Created Successfully";
     public const string SuccessEditNotification = "{0} Updated Successfully";
     public const string SuccessDeleteNotification = "{0} Deleted Successfully";
+
+    public const string ProcessFilesErrorMessage = "Error occurs in {0} method!";
 }

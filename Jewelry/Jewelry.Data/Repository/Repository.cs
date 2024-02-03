@@ -22,6 +22,11 @@ public class Repository<T> : IRepository<T> where T : class
         this.dbSet.Add(entity);
     }
 
+    public void AddRange(IEnumerable<T> entities)
+    {
+        this.dbSet.AddRange(entities);
+    }
+
     public T Get(Expression<Func<T, bool>> filter, string includeProperties = null, bool tracked = false)
     {
         IQueryable<T> query;

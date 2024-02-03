@@ -28,10 +28,14 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IDbInitializer, DbInitializer>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IImageRepository, ImageRepository>();
+
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IImageService, ImageService>();
 
 var app = builder.Build();
 
