@@ -14,6 +14,12 @@ public class CategoryService : ICategoryService
         this.categoryRepository = categoryRepository;
     }
 
+    public void Add(Category category)
+    {
+        this.categoryRepository.Add(category);
+        this.categoryRepository.Save();
+    }
+
     public List<Category> GetAll()
     {
         var categories = this.categoryRepository.GetAll().OrderBy(x => x.DisplayOrder).ToList();
