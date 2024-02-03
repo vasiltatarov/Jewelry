@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Jewelry.Models\Jewelry.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbInitializer\" />
+  </ItemGroup>
+
 </Project>
