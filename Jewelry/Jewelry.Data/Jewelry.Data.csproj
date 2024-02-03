@@ -18,10 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Jewelry.Models\Jewelry.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DbInitializer\" />
+    <ProjectReference Include="..\Jewelry.Utility\Jewelry.Utility.csproj" />
   </ItemGroup>
 
 </Project>
