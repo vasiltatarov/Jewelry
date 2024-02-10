@@ -76,8 +76,9 @@
                                           id="inputGroup-sizing-default">
                                         Количество
                                     </span>
-                                    <input asp-for="@Model.Count" type="number" value="1" class="form-control text-end"
+                                    <input asp-for="@Model.Count" type="number" value="@Model.Count" class="form-control text-end"
                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                                    <span asp-validation-for="@Model.Count" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -87,6 +88,10 @@
                                         class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold @(Model.Availability == Availability.OutOfStock ? "disabled" : "")">
                                     Добави в количката
                                 </button>
+                                @if (TempData[WebConstants.NotEnoughQuantityKey] != null)
+                                {
+                                    <span class="text-danger">@TempData[WebConstants.NotEnoughQuantityKey]</span>
+                                }
                             </div>
                         </div>
                     </div>
@@ -95,3 +100,9 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

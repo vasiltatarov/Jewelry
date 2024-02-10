@@ -58,4 +58,11 @@ public class ProductService : IProductService
             return Availability.HighAvailability;
         }
     }
+
+    public bool HasQuantity(int productId, int count)
+    {
+        var product = this.GetById(productId);
+
+        return product.OutOfStock == false && product.Quantity >= count;
+    }
 }

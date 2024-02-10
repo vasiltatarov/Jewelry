@@ -16,4 +16,6 @@ public interface IProductService
     void Delete(Product product);
 
     Availability GetProductAvailability(Product product);
+
+    bool HasQuantity(int productId, int count);
 }
