@@ -28,7 +28,7 @@ public class ProductController : Controller
 
         if (id.HasValue && id.Value > 0)
         {
-            viewModel.Product = this.productService.GetById(id.Value);
+            viewModel.Product = this.productService.GetById(id.Value, "ProductImages");
         }
 
         return View(viewModel);
@@ -93,7 +93,7 @@ public class ProductController : Controller
     [HttpDelete]
     public IActionResult Delete(int? id)
     {
-        var product = this.productService.GetById(id.Value);
+        var product = this.productService.GetById(id.Value, "ProductImages");
 
         if (product == null)
         {

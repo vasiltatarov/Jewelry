@@ -17,6 +17,25 @@ public class HomeController : Controller
         return View(products);
     }
 
+    public IActionResult Details(int productId)
+    {
+        var product = this.productService.GetById(productId, "Category,ProductImages");
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new ShoppingCartViewModel
+        {
+            Product = product,
+            Count = 1,
+            Availability = this.productService.GetProductAvailability(product)
+        };
+
+        return View(viewModel);
+    }
+
     public IActionResult Privacy()
     {
         return View();
