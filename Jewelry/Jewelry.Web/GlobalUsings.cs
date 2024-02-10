@@ -15,3 +15,4 @@ global using Jewelry.Data.Services.IServices;
 global using Jewelry.Utility;
 global using Jewelry.Models.DbModels;
 global using Jewelry.Models.ViewModels;
+global using Jewelry.Web.Infrastructure;

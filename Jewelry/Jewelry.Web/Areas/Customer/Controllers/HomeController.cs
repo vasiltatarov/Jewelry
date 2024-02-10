@@ -1,7 +1,5 @@
 namespace Jewelry.Web.Areas.Customer.Controllers;
 
-using System.Security.Claims;
-
 [Area(WebConstants.CustomerAreaName)]
 public class HomeController : Controller
 {
@@ -56,11 +54,7 @@ public class HomeController : Controller
             return View(viewModel);
         }
 
-        //Refactoring
-        var claimsIdentity = (ClaimsIdentity)User.Identity;
-        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        this.shoppingCartService.AddToCart(viewModel.Product.Id, userId, viewModel.Count);
+        this.shoppingCartService.AddToCart(viewModel.Product.Id, this.User.GetUserId(), viewModel.Count);
 
         TempData["success"] = WebConstants.AddToCartNotification;
 
