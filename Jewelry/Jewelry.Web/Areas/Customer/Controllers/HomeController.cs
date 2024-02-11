@@ -28,7 +28,7 @@ public class HomeController : Controller
             return NotFound();
         }
 
-        var viewModel = new ShoppingCartViewModel
+        var viewModel = new ProductDetailsPageViewModel
         {
             Product = product,
             Count = 1,
@@ -40,7 +40,7 @@ public class HomeController : Controller
 
     [HttpPost]
     [Authorize]
-    public IActionResult Details(ShoppingCartViewModel viewModel)
+    public IActionResult Details(ProductDetailsPageViewModel viewModel)
     {
         if (this.productService.HasQuantity(viewModel.Product.Id, viewModel.Count) == false)
         {
