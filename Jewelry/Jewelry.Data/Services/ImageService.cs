@@ -119,4 +119,9 @@ public class ImageService : IImageService
             return false;
         }
     }
+
+    public IEnumerable<ProductImage> GetAll()
+    {
+        return this.imageRepository.GetAll();
+    }
 }

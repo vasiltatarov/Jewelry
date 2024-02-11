@@ -24,4 +24,7 @@ public class ShoppingCart
     [ValidateNever]
     [ForeignKey("UserId")]
     public ApplicationUser User { get; set; }
+
+    [NotMapped]
+    public string ImageUrl { get; set; }
 }

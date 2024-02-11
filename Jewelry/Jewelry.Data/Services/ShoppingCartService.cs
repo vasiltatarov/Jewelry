@@ -3,6 +3,8 @@
 using Jewelry.Data.Repository.IRepository;
 using Jewelry.Data.Services.IServices;
 using Jewelry.Models.DbModels;
+using Jewelry.Models.Dtos;
+using System.Collections.Generic;
 
 public class ShoppingCartService : IShoppingCartService
 {
@@ -34,5 +36,20 @@ public class ShoppingCartService : IShoppingCartService
         }
 
         this.shoppingCartRepository.Save();
+    }
+
+    public List<ShoppingCart> GetAllForUser(string userId)
+    {
+        return this.shoppingCartRepository.GetAll(x => x.UserId == userId, "Product").ToList();
+
+        //return shippongCarts.Select(x => new ShoppingCartDto
+        //{
+        //    Id = x.Id,
+        //    UserId = userId,
+        //    Count = x.Count,
+        //    ProductId = x.ProductId,
+        //    Product = x.Product
+        //})
+        //.ToList();
     }
 }
