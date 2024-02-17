@@ -5,11 +5,11 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jewelry.Web", "Jewelry.Web\Jewelry.Web.csproj", "{FEF06ADB-BEF3-43E3-859C-5AE0A1A44274}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jewelry.Utility", "Jewelry.Utility\Jewelry.Utility.csproj", "{30FA6AB7-5563-467A-A1BE-E3BD899E9146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jewelry.Utility", "Jewelry.Utility\Jewelry.Utility.csproj", "{30FA6AB7-5563-467A-A1BE-E3BD899E9146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jewelry.Models", "Jewelry.Models\Jewelry.Models.csproj", "{FF5D59CB-F2B8-40E8-94D8-31FFE0F089C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jewelry.Models", "Jewelry.Models\Jewelry.Models.csproj", "{FF5D59CB-F2B8-40E8-94D8-31FFE0F089C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jewelry.Data", "Jewelry.Data\Jewelry.Data.csproj", "{2C0D7E9F-9C43-48E8-9E65-0176CC982DCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jewelry.Data", "Jewelry.Data\Jewelry.Data.csproj", "{2C0D7E9F-9C43-48E8-9E65-0176CC982DCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

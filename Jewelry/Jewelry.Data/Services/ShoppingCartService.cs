@@ -10,11 +10,13 @@ public class ShoppingCartService : IShoppingCartService
 {
     private readonly IShoppingCartRepository shoppingCartRepository;
     private readonly IImageService imageService;
+    private readonly IApplicationUserRepository userRepository;
 
-    public ShoppingCartService(IShoppingCartRepository shoppingCartRepository, IImageService imageService)
+    public ShoppingCartService(IShoppingCartRepository shoppingCartRepository, IImageService imageService, IApplicationUserRepository userRepository)
     {
         this.shoppingCartRepository = shoppingCartRepository;
         this.imageService = imageService;
+        this.userRepository = userRepository;
     }
 
     public void AddToCart(int productId, string userId, int count)
@@ -107,5 +109,19 @@ public class ShoppingCartService : IShoppingCartService
         }
 
         return total;
+    }
+
+    public void OrderDetailsForUser(OrderHeader orderHeader, string userId)
+    {
+        var user = this.userRepository.Get(x => x.Id == userId);
+
+        orderHeader.User = user;
+        orderHeader.Name = user.Name;
+        orderHeader.Surname = user.Surname;
+        orderHeader.Area = user.Area;
+        orderHeader.City = user.City;
+        orderHeader.Street = user.Street;
+        orderHeader.StreetAddress = user.StreetAddress;
+        orderHeader.PhoneNumber = user.PhoneNumber;
     }
 }

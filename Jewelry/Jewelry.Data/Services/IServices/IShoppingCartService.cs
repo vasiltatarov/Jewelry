@@ -1,5 +1,6 @@
 ﻿namespace Jewelry.Data.Services.IServices;
 
+using Jewelry.Models.DbModels;
 using Jewelry.Models.Dtos;
 
 public interface IShoppingCartService
@@ -15,4 +16,6 @@ public interface IShoppingCartService
     void Remove(int cartId);
 
     double CalculateOrderTotal(List<ShoppingCartDto> shoppingCarts);
+
+    void OrderDetailsForUser(OrderHeader orderHeader, string userId);
 }
