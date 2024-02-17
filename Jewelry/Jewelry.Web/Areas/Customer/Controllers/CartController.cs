@@ -5,12 +5,10 @@
 public class CartController : Controller
 {
     private readonly IShoppingCartService shoppingCartService;
-    private readonly IImageService imageService;
 
-    public CartController(IShoppingCartService shoppingCartService, IImageService imageService)
+    public CartController(IShoppingCartService shoppingCartService)
     {
         this.shoppingCartService = shoppingCartService;
-        this.imageService = imageService;
     }
 
     [BindProperty]
@@ -20,17 +18,10 @@ public class CartController : Controller
     {
         this.ShoppingCartViewModel = new()
         {
-            ShoppingCartList = this.shoppingCartService.GetAllForUser(this.User.GetUserId()),
-            OrderHeader = new()
+            ShoppingCartList = this.shoppingCartService.GetAllForUser(this.User.GetUserId())
         };
 
-        var images = this.imageService.GetAll();
-
-        foreach (var cart in this.ShoppingCartViewModel.ShoppingCartList)
-        {
-            cart.ImageUrl = images.FirstOrDefault(x => x.ProductId == cart.Product.Id)?.ImageUrl;
-            this.ShoppingCartViewModel.OrderHeader.OrderTotal += cart.Product.Price * cart.Count;
-        }
+        this.ShoppingCartViewModel.OrderHeader.OrderTotal = this.shoppingCartService.CalculateOrderTotal(this.ShoppingCartViewModel.ShoppingCartList);
 
         return View(this.ShoppingCartViewModel);
     }

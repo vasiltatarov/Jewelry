@@ -9,10 +9,12 @@ using System.Collections.Generic;
 public class ShoppingCartService : IShoppingCartService
 {
     private readonly IShoppingCartRepository shoppingCartRepository;
+    private readonly IImageService imageService;
 
-    public ShoppingCartService(IShoppingCartRepository shoppingCartRepository)
+    public ShoppingCartService(IShoppingCartRepository shoppingCartRepository, IImageService imageService)
     {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.imageService = imageService;
     }
 
     public void AddToCart(int productId, string userId, int count)
@@ -38,19 +40,26 @@ public class ShoppingCartService : IShoppingCartService
         this.shoppingCartRepository.Save();
     }
 
-    public List<ShoppingCart> GetAllForUser(string userId)
+    public List<ShoppingCartDto> GetAllForUser(string userId)
     {
-        return this.shoppingCartRepository.GetAll(x => x.UserId == userId, "Product").ToList();
+        var images = this.imageService.GetAll();
 
-        //return shippongCarts.Select(x => new ShoppingCartDto
-        //{
-        //    Id = x.Id,
-        //    UserId = userId,
-        //    Count = x.Count,
-        //    ProductId = x.ProductId,
-        //    Product = x.Product
-        //})
-        //.ToList();
+        var shoppingCarts = this.shoppingCartRepository
+            .GetAll(x => x.UserId == userId, "Product")
+            .Select(x => new ShoppingCartDto
+            {
+                Id = x.Id,
+                UserId = userId,
+                Count = x.Count,
+                ProductId = x.ProductId,
+                ProductName = x.Product.Name,
+                ProductDescription = x.Product.Description.Substring(0, 50),
+                ProductPrice = x.Product.Price,
+                ProductImageUrl = images.FirstOrDefault(i => i.ProductId == x.Product.Id)?.ImageUrl
+            })
+            .ToList();
+
+        return shoppingCarts;
     }
 
     public void Plus(int cartId)
@@ -86,5 +95,17 @@ public class ShoppingCartService : IShoppingCartService
             this.shoppingCartRepository.Remove(cartItem);
             this.shoppingCartRepository.Save();
         }
+    }
+
+    public double CalculateOrderTotal(List<ShoppingCartDto> shoppingCarts)
+    {
+        double total = 0;
+
+        foreach (var cart in shoppingCarts)
+        {
+            total += cart.ProductPrice * cart.Count;
+        }
+
+        return total;
     }
 }
