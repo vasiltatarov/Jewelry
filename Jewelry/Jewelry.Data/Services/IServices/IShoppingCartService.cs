@@ -18,4 +18,6 @@ public interface IShoppingCartService
     double CalculateOrderTotal(List<ShoppingCartDto> shoppingCarts);
 
     void OrderDetailsForUser(OrderHeader orderHeader, string userId);
+
+    void AddImagesToCarts(List<ShoppingCartDto> shoppingCarts);
 }

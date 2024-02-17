@@ -44,9 +44,7 @@ public class ShoppingCartService : IShoppingCartService
 
     public List<ShoppingCartDto> GetAllForUser(string userId)
     {
-        var images = this.imageService.GetAll();
-
-        var shoppingCarts = this.shoppingCartRepository
+        return this.shoppingCartRepository
             .GetAll(x => x.UserId == userId, "Product")
             .Select(x => new ShoppingCartDto
             {
@@ -56,12 +54,9 @@ public class ShoppingCartService : IShoppingCartService
                 ProductId = x.ProductId,
                 ProductName = x.Product.Name,
                 ProductDescription = x.Product.Description.Substring(0, 50),
-                ProductPrice = x.Product.Price,
-                ProductImageUrl = images.FirstOrDefault(i => i.ProductId == x.Product.Id)?.ImageUrl
+                ProductPrice = x.Product.Price
             })
             .ToList();
-
-        return shoppingCarts;
     }
 
     public void Plus(int cartId)
@@ -123,5 +118,15 @@ public class ShoppingCartService : IShoppingCartService
         orderHeader.Street = user.Street;
         orderHeader.StreetAddress = user.StreetAddress;
         orderHeader.PhoneNumber = user.PhoneNumber;
+    }
+
+    public void AddImagesToCarts(List<ShoppingCartDto> shoppingCarts)
+    {
+        var images = this.imageService.GetAll();
+
+        foreach (var cart in shoppingCarts)
+        {
+            cart.ProductImageUrl = images.FirstOrDefault(x => x.ProductId == cart.ProductId)?.ImageUrl;
+        }
     }
 }

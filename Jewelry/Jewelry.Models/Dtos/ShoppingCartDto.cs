@@ -1,7 +1,5 @@
 ﻿namespace Jewelry.Models.Dtos;
 
-using Jewelry.Models.DbModels;
-
 public class ShoppingCartDto
 {
     public int Id { get; set; }

@@ -21,6 +21,7 @@ public class CartController : Controller
             ShoppingCartList = this.shoppingCartService.GetAllForUser(this.User.GetUserId())
         };
 
+        this.shoppingCartService.AddImagesToCarts(this.ShoppingCartViewModel.ShoppingCartList);
         this.ShoppingCartViewModel.OrderHeader.OrderTotal = this.shoppingCartService.CalculateOrderTotal(this.ShoppingCartViewModel.ShoppingCartList);
 
         return View(this.ShoppingCartViewModel);
