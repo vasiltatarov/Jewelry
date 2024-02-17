@@ -34,4 +34,25 @@ public class CartController : Controller
 
         return View(this.ShoppingCartViewModel);
     }
+
+    public IActionResult Plus(int cartId)
+    {
+        this.shoppingCartService.Plus(cartId);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Minus(int cartId)
+    {
+        this.shoppingCartService.Minus(cartId);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Remove(int cartId)
+    {
+        this.shoppingCartService.Remove(cartId);
+
+        return RedirectToAction(nameof(Index));
+    }
 }

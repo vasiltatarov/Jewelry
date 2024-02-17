@@ -52,4 +52,39 @@ public class ShoppingCartService : IShoppingCartService
         //})
         //.ToList();
     }
+
+    public void Plus(int cartId)
+    {
+        var cartItem = this.shoppingCartRepository.Get(x => x.Id == cartId);
+        
+        if (cartItem != null && cartItem.Count < 100)
+        {
+            cartItem.Count += 1;
+            this.shoppingCartRepository.Update(cartItem);
+            this.shoppingCartRepository.Save();
+        }
+    }
+
+    public void Minus(int cartId)
+    {
+        var cartItem = this.shoppingCartRepository.Get(x => x.Id == cartId);
+
+        if (cartItem != null && cartItem.Count > 1)
+        {
+            cartItem.Count -= 1;
+            this.shoppingCartRepository.Update(cartItem);
+            this.shoppingCartRepository.Save();
+        }
+    }
+
+    public void Remove(int cartId)
+    {
+        var cartItem = this.shoppingCartRepository.Get(x => x.Id == cartId);
+
+        if (cartItem != null)
+        {
+            this.shoppingCartRepository.Remove(cartItem);
+            this.shoppingCartRepository.Save();
+        }
+    }
 }
