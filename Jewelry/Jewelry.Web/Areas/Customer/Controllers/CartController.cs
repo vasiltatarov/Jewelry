@@ -5,10 +5,14 @@
 public class CartController : Controller
 {
     private readonly IShoppingCartService shoppingCartService;
+    private readonly IOrderHeaderService orderHeaderService;
+    private readonly IOrderDetailService orderDetailService;
 
-    public CartController(IShoppingCartService shoppingCartService)
+    public CartController(IShoppingCartService shoppingCartService, IOrderHeaderService orderHeaderService, IOrderDetailService orderDetailService)
     {
         this.shoppingCartService = shoppingCartService;
+        this.orderHeaderService = orderHeaderService;
+        this.orderDetailService = orderDetailService;
     }
 
     [BindProperty]
@@ -51,7 +55,20 @@ public class CartController : Controller
         this.ShoppingCartViewModel.OrderHeader.PaymentStatus = GlobalConstants.PaymentStatusPending;
         this.ShoppingCartViewModel.OrderHeader.OrderStatus = GlobalConstants.StatusPending;
 
-        // Create Order header
+        this.orderHeaderService.Add(this.ShoppingCartViewModel.OrderHeader);
+
+        foreach (var cart in this.ShoppingCartViewModel.ShoppingCartList)
+        {
+            var orderDetail = new OrderDetail
+            {
+                OrderHeaderId = this.ShoppingCartViewModel.OrderHeader.Id,
+                ProductId = cart.ProductId,
+                Price = cart.ProductPrice,
+                Count = cart.Count
+            };
+
+            this.orderDetailService.Add(orderDetail);
+        }
 
         // Implement Stripe payment
 
