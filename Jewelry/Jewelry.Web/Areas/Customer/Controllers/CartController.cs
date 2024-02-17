@@ -44,6 +44,17 @@ public class CartController : Controller
     [ActionName("Summary")]
     public IActionResult SummaryPost()
     {
+        this.ShoppingCartViewModel.ShoppingCartList = this.shoppingCartService.GetAllForUser(this.User.GetUserId());
+        this.ShoppingCartViewModel.OrderHeader.OrderDate = DateTime.Now;
+        this.ShoppingCartViewModel.OrderHeader.UserId = this.User.GetUserId();
+
+        this.ShoppingCartViewModel.OrderHeader.PaymentStatus = GlobalConstants.PaymentStatusPending;
+        this.ShoppingCartViewModel.OrderHeader.OrderStatus = GlobalConstants.StatusPending;
+
+        // Create Order header
+
+        // Implement Stripe payment
+
         return View();
     }
 
