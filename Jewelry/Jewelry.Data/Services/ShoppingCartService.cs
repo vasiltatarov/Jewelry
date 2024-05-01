@@ -129,4 +129,12 @@ public class ShoppingCartService : IShoppingCartService
             cart.ProductImageUrl = images.FirstOrDefault(x => x.ProductId == cart.ProductId)?.ImageUrl;
         }
     }
+
+    public void ClearShoppingCarts(string userId)
+    {
+        var shoppingCarts = this.shoppingCartRepository.GetAll(x => x.UserId == userId);
+
+        this.shoppingCartRepository.RemoveRange(shoppingCarts);
+        this.shoppingCartRepository.Save();
+    }
 }

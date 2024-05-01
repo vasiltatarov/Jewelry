@@ -20,4 +20,6 @@ public interface IShoppingCartService
     void OrderDetailsForUser(OrderHeader orderHeader, string userId);
 
     void AddImagesToCarts(List<ShoppingCartDto> shoppingCarts);
+
+    void ClearShoppingCarts(string userId);
 }

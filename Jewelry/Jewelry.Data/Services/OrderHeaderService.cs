@@ -18,4 +18,21 @@ public class OrderHeaderService : IOrderHeaderService
         this.orderHeaderRepository.Add(orderHeader);
         this.orderHeaderRepository.Save();
     }
+
+    public OrderHeader Get(int id)
+    {
+        return this.orderHeaderRepository.Get(x => x.Id == id, "User");
+    }
+
+    public void UpdateStatus(int id, string orderStatus, string paymentStatus = null)
+    {
+        this.orderHeaderRepository.UpdateStatus(id, orderStatus, paymentStatus);
+        this.orderHeaderRepository.Save();
+    }
+
+    public void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+    {
+        this.orderHeaderRepository.UpdateStripePaymentID(id, sessionId, paymentIntentId);
+        this.orderHeaderRepository.Save();
+    }
 }

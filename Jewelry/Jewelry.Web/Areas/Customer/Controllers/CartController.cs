@@ -1,5 +1,7 @@
 ﻿namespace Jewelry.Web.Areas.Customer.Controllers;
 
+using Stripe.Checkout;
+
 [Area(WebConstants.CustomerAreaName)]
 [Authorize]
 public class CartController : Controller
@@ -70,9 +72,64 @@ public class CartController : Controller
             this.orderDetailService.Add(orderDetail);
         }
 
-        // Implement Stripe payment
+        //stripe logic
 
-        return View();
+        var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+        var options = new SessionCreateOptions
+        {
+            SuccessUrl = $"{domain}Customer/Cart/OrderConfirmation?id={this.ShoppingCartViewModel.OrderHeader.Id}",
+            CancelUrl = $"{domain}Customer/Cart/Index",
+            LineItems = new List<SessionLineItemOptions>(),
+            Mode = "payment",
+        };
+
+        foreach (var cart in this.ShoppingCartViewModel.ShoppingCartList)
+        {
+            var lineItem = new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    UnitAmount = (long)cart.ProductPrice * 100, // 20.50 * 100 => 2050
+                    Currency = "BGN",
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = cart.ProductName
+                    }
+                },
+                Quantity = cart.Count
+            };
+
+            options.LineItems.Add(lineItem);
+        }
+
+        var service = new SessionService();
+        var session = service.Create(options);
+
+        this.orderHeaderService.UpdateStripePaymentID(this.ShoppingCartViewModel.OrderHeader.Id, session.Id, session.PaymentIntentId);
+
+        Response.Headers.Add("Location", session.Url);
+
+        return new StatusCodeResult(303);
+    }
+
+    public IActionResult OrderConfirmation(int id)
+    {
+        var orderHeader = this.orderHeaderService.Get(id);
+
+        var service = new SessionService();
+        var session = service.Get(orderHeader.SessionId);
+
+        if (session.PaymentStatus.ToLower() == "paid")
+        {
+            this.orderHeaderService.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
+            this.orderHeaderService.UpdateStatus(id, GlobalConstants.StatusApproved, GlobalConstants.PaymentStatusApproved);
+        }
+
+        HttpContext.Session.Clear();
+
+        this.shoppingCartService.ClearShoppingCarts(orderHeader.UserId);
+
+        return View(id);
     }
 
     // ToDo Check if the quantity is more than the existing
